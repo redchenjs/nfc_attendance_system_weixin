@@ -305,6 +305,12 @@ Page({
         });
     }, 1000) // 循环时间 这里是1秒
   },
+  onShow: function () {
+      wx.hideLoading();
+      this.setData({
+          userToken: null
+      });
+  },
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
