@@ -23,7 +23,7 @@
 .input {
     margin: 50rpx;
     width: 256rpx;
-    height: 256rpx; 
+    height: 200rpx; 
 }
 
 .inputbox {
@@ -33,8 +33,20 @@
     border-style: solid;
 }
 
+.user_id {
+    margin-top: 20px;
+}
+
+.text_user_id {
+    color: #aaa;
+}
+
 .button {
     margin-top: 30px;
     margin-left: 15%;
     margin-right: 15%;
+}
+
+.prompt {
+    margin-top: 0px;
 }

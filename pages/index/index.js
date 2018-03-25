@@ -13,7 +13,9 @@ Page({
     hasBound: null,
     stuNum: null,
     stuNumIn: null,
-    stuPwdIn: null
+    stuPwdIn: null,
+    lastTime: null,
+    lastLocation: null
   },
   //事件处理函数
   bindViewTap: function() {
@@ -276,21 +278,27 @@ Page({
             success: function (res) {
                 if (res.data.status == true) {
                     that.setData({
-                        motto: '您已绑定学号，请点击头像登录',
+                        motto: '您已绑定学号，点击头像签到',
                         hasBound: true,
-                        stuNum: res.data.stuNum
+                        stuNum: res.data.stuNum,
+                        lastTime: res.data.lastTime,
+                        lastLocation: res.data.lastLocation
                     });
                 } else if (res.data.status == false) {
                     that.setData({
-                        motto: '您未绑定学号，请在下方绑定学号',
+                        motto: '您未绑定学号，请在下方绑定',
                         hasBound: false,
-                        stuNum: null
+                        stuNum: null,
+                        lastTime: null,
+                        lastLocation: null
                     });
                 } else {
                     that.setData({
                         motto: '服务器故障',
                         hasBound: null,
-                        stuNum: null
+                        stuNum: null,
+                        lastTime: null,
+                        lastLocation: null
                     });
                 }
             }
