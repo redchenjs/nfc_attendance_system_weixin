@@ -12,8 +12,8 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasBound: null,
     stuNum: null,
-    stuNumIn: null,
-    stuPwdIn: null,
+    stuNumIn: '',
+    stuPwdIn: '',
     lastTime: null,
     lastLocation: null
   },
@@ -36,8 +36,8 @@ Page({
                   'content-type': 'application/json'
               },
               success: function (res) {
-                  wx.hideLoading();
-                  if (res.data.status == true) {
+                wx.hideLoading();
+                if (res.data.status === true) {
                     that.setData({
                         userToken: res.data.token
                     })
@@ -45,13 +45,19 @@ Page({
                         title: '请刷考勤机',
                         mask: true
                     });
-                  } else {
-                      wx.showToast({
-                          title: '服务器故障',
-                          icon: 'none',
-                          duration: 2000
-                      });
-                  }
+                } else if (res.data.status === false) {
+                    wx.showToast({
+                        title: '禁止签到',
+                        icon: 'none',
+                        duration: 2000
+                    });
+                } else if (res.data.status === null) {
+                    wx.showToast({
+                        title: '服务器故障',
+                        icon: 'none',
+                        duration: 2000
+                    });
+                }
               },
               fail: function (res) {
                   wx.hideLoading();
@@ -88,19 +94,19 @@ Page({
                       },
                       success: function (res) {
                           wx.hideLoading();
-                          if (res.data.status == true) {
+                          if (res.data.status === true) {
                               wx.showToast({
                                   title: '解绑成功',
                                   icon: 'success',
                                   duration: 2000
                               });
-                          } else if (res.data.status == false) {
+                          } else if (res.data.status === false) {
                               wx.showToast({
                                   title: res.data.errMsg,
                                   icon: 'none',
                                   duration: 2000
                               });
-                          } else {
+                          } else if (res.data.status === null) {
                               wx.showToast({
                                   title: '服务器故障',
                                   icon: 'none',
@@ -133,15 +139,14 @@ Page({
   },
   bindBtn: function () {
       var that = this;
-      if (this.data.stuNumIn == null) {
+      if (this.data.stuNumIn === '') {
           wx.showToast({
               title: '请输入学号',
               icon: 'none',
               duration: 2000
           });
           return;
-      }
-      if (this.data.stuPwdIn == null) {
+      } else if (this.data.stuPwdIn === '') {
           wx.showToast({
               title: '请输入密码',
               icon: 'none',
@@ -172,19 +177,19 @@ Page({
                       },
                       success: function (res) {
                           wx.hideLoading();
-                          if (res.data.status == true) {
+                          if (res.data.status === true) {
                               wx.showToast({
                                   title: '绑定成功',
                                   icon: 'success',
                                   duration: 2000
                               });
-                          } else if (res.data.status == false) {
+                          } else if (res.data.status === false) {
                               wx.showToast({
                                   title: res.data.errMsg,
                                   icon: 'none',
                                   duration: 2000
                               });
-                          } else {
+                          } else if (res.data.status === null) {
                               wx.showToast({
                                   title: '服务器故障',
                                   icon: 'none',
@@ -238,7 +243,7 @@ Page({
         success: function (res) {
             wx.onHCEMessage(function (res) {
                 if (res.messageType === 1) {
-                    if (that.data.userToken == null) {
+                    if (that.data.userToken === null) {
                         return;
                     }
                     var request_str = 'f222222222' + that.data.userToken;
@@ -276,7 +281,7 @@ Page({
                 'content-type': 'application/json'
             },
             success: function (res) {
-                if (res.data.status == true) {
+                if (res.data.status === true) {
                     that.setData({
                         motto: '您已绑定学号，点击头像签到',
                         hasBound: true,
@@ -284,7 +289,7 @@ Page({
                         lastTime: res.data.lastTime,
                         lastLocation: res.data.lastLocation
                     });
-                } else if (res.data.status == false) {
+                } else if (res.data.status === false) {
                     that.setData({
                         motto: '您未绑定学号，请在下方绑定',
                         hasBound: false,
@@ -292,7 +297,7 @@ Page({
                         lastTime: null,
                         lastLocation: null
                     });
-                } else {
+                } else if (res.data.status === null) {
                     that.setData({
                         motto: '服务器故障',
                         hasBound: null,
@@ -319,5 +324,4 @@ Page({
       hasUserInfo: true
     })
   }
-
 })

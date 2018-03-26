@@ -25,9 +25,9 @@
     </block>
     <block wx:elif="{{hasBound!=null}}">
         <view class="input">
-            <input class="inputbox" bindinput="stuNumInput" maxlength="10" name="stuNum" placeholder="学号"/> 
-            <input class="inputbox" bindinput="stuPwdInput" maxlength="16" password name="stuPwd" placeholder="密码"/>  
-            <button class="button" bindtap="bindBtn">绑定</button>  
+            <input class="inputbox" bindinput="stuNumInput" maxlength="10" type="text" name="stuNum" placeholder="学号"/>
+            <input class="inputbox" bindinput="stuPwdInput" maxlength="6" type="idcard" password name="stuPwd" placeholder="密码"/>
+            <button class="button" bindtap="bindBtn">绑定</button>
         </view>
     </block>
 </view>
