@@ -5,7 +5,7 @@ const util = require('../../utils/util.js');
 
 Page({
   data: {
-    motto: '正在更新数据，请稍候...',
+      motto: '努力加载中(..•˘_˘•..)...',
     userInfo: {},
     userToken: null,
     hasUserInfo: false,
