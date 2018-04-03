@@ -139,14 +139,14 @@ Page({
   },
   bindBtn: function () {
       var that = this;
-      if (this.data.stuNumIn === '') {
+      if (this.data.stuNumIn == '') {
           wx.showToast({
               title: '请输入学号',
               icon: 'none',
               duration: 2000
           });
           return;
-      } else if (this.data.stuPwdIn === '') {
+      } else if (this.data.stuPwdIn == '') {
           wx.showToast({
               title: '请输入密码',
               icon: 'none',
