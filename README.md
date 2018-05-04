@@ -1,3 +1,2 @@
-WeChat Client for NFC Attendence System
-=======================================
-
+WeChat Mini Program Client for NFC Attendance System
+====================================================
