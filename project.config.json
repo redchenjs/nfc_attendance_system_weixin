@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.7.0",
 	"appid": "wx8d7f06fb7ba10c2d",
-	"projectname": "nfc_attendence_system",
+	"projectname": "nfc_attendance_system",
 	"condition": {
 		"search": {
 			"current": -1,
