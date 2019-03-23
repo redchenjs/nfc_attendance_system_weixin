@@ -5,11 +5,8 @@ const util = require('../../utils/util.js');
 
 Page({
     data: {
-        motto: '正在加载数据，请稍候...',
-        userInfo: {},
+        prompt: '正在加载数据，请稍候...',
         userToken: null,
-        hasUserInfo: false,
-        canIUse: wx.canIUse('button.open-type.getUserInfo'),
         nfcAvaliable: null,
         hasBound: null,
         stuNum: null,
@@ -19,7 +16,7 @@ Page({
         lastLocation: null
     },
     // 点击头像事件
-    avatarTap: function() {
+    coverTap: function() {
         var that = this;
         that.setData({
             nfcAvaliable: null
@@ -256,32 +253,6 @@ Page({
     },
     // 页面加载事件
     onLoad: function () {
-        if (app.globalData.userInfo) {
-            this.setData({
-                userInfo: app.globalData.userInfo,
-                hasUserInfo: true
-            });
-        } else if (this.data.canIUse) {
-            // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-            // 所以此处加入 callback 以防止这种情况
-            app.userInfoReadyCallback = res => {
-                this.setData({
-                    userInfo: res.userInfo,
-                    hasUserInfo: true
-                });
-            }
-        } else {
-            // 在没有 open-type=getUserInfo 版本的兼容处理
-            wx.getUserInfo({
-                success: res => {
-                    app.globalData.userInfo = res.userInfo;
-                    this.setData({
-                        userInfo: res.userInfo,
-                        hasUserInfo: true
-                    });
-                }
-            });
-        }
         var that = this;
         setInterval(function () {
             wx.request({
@@ -297,7 +268,7 @@ Page({
                 success: function (res) {
                     if (res.data.status === true) {
                         that.setData({
-                            motto: '您已绑定学号，点击头像签到',
+                            prompt: '您已绑定学号，点击上方NFC标志签到',
                             hasBound: true,
                             stuNum: res.data.stuNum,
                             lastTime: res.data.lastTime,
@@ -305,7 +276,7 @@ Page({
                         });
                     } else if (res.data.status === false) {
                         that.setData({
-                            motto: '您未绑定学号，请在下方绑定',
+                            prompt: '您未绑定学号，请在下方绑定',
                             hasBound: false,
                             stuNum: null,
                             lastTime: null,
@@ -313,7 +284,7 @@ Page({
                         });
                     } else if (res.data.status === null) {
                         that.setData({
-                            motto: '服务器故障',
+                            prompt: '服务器故障',
                             hasBound: null,
                             stuNum: null,
                             lastTime: null,
@@ -329,15 +300,6 @@ Page({
         wx.hideLoading();
         this.setData({
             userToken: null
-        });
-    },
-    // 获取用户信息事件
-    getUserInfo: function(e) {
-        console.log(e);
-        app.globalData.userInfo = e.detail.userInfo;
-        this.setData({
-            userInfo: e.detail.userInfo,
-            hasUserInfo: true
         });
     }
 });

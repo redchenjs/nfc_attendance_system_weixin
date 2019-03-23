@@ -1,26 +1,21 @@
 <!--index.wxml-->
 <view class="container">
-    <view class="userinfo">
-        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-        <block wx:else>
-            <image bindtap="avatarTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-        </block>
+    <view class="cover">
+        <image bindtap="coverTap" class="cover_image" src="index.png" background-size="cover"></image>
     </view>
-    <view class="usermotto">
-        <text class="user-motto">{{motto}}</text>
+    <view class="prompt">
+        <text class="prompt_text">{{prompt}}</text>
     </view>
-
     <block wx:if="{{hasBound}}">
-        <view class="user_id">
-            <text class="text_user_id">学号: {{stuNum}}\n</text>
+        <view class="userid">
+            <text class="userid_text">学号: {{stuNum}}\n</text>
         </view>
         <view class="input">
             <button class="button" bindtap="unbindBtn">解绑</button>
         </view>
-        <view class="prompt">
-            <text class="prompt_time">最后签到时间: {{lastTime}}\n</text>
-            <text class="prompt_location">最后签到位置: {{lastLocation}}</text>
+        <view class="info">
+            <text class="info_time">最后签到时间: {{lastTime}}\n</text>
+            <text class="info_location">最后签到位置: {{lastLocation}}</text>
         </view>
     </block>
     <block wx:elif="{{hasBound!=null}}">
