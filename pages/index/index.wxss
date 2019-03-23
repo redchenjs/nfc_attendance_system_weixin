@@ -1,48 +1,49 @@
 /**index.wxss**/
+
 .cover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .cover_image {
-    width: 200rpx;
-    height: 200rpx;
-    margin: 20rpx;
-    border-radius: 50%;
+  width: 200rpx;
+  height: 200rpx;
+  margin: 20rpx;
+  border-radius: 50%;
 }
 
 .prompt {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .input {
-    margin: 50rpx;
-    width: 256rpx;
-    height: 200rpx; 
+  margin: 50rpx;
+  width: 256rpx;
+  height: 200rpx;
 }
 
 .inputbox {
-    margin-top: 20px;
-    border-width: 1rpx 1rpx 1rpx 1rpx;
-    border-color: #aaa;
-    border-style: solid;
+  margin-top: 20px;
+  border-width: 1rpx 1rpx 1rpx 1rpx;
+  border-color: #aaa;
+  border-style: solid;
 }
 
 .userid {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .userid_text {
-    color: #aaa;
+  color: #aaa;
 }
 
 .button {
-    margin-top: 30px;
-    margin-left: 15%;
-    margin-right: 15%;
+  margin-top: 30px;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .info {
-    margin-top: 0px;
+  margin-top: 0px;
 }

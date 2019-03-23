@@ -4,302 +4,304 @@ const app = getApp();
 const util = require('../../utils/util.js');
 
 Page({
-    data: {
-        prompt: '正在加载数据，请稍候...',
-        userToken: null,
-        nfcAvaliable: null,
-        hasBound: null,
-        stuNum: null,
-        stuNumIn: '',
-        stuPwdIn: '',
-        lastTime: null,
-        lastLocation: null
-    },
-    // 点击头像事件
-    coverTap: function() {
-        var that = this;
+  data: {
+    prompt: '正在加载数据，请稍候...',
+    userToken: null,
+    nfcAvaliable: null,
+    hasBound: null,
+    stuNum: null,
+    stuNumIn: '',
+    stuPwdIn: '',
+    lastTime: null,
+    lastLocation: null
+  },
+  // 点击头像事件
+  coverTap: function() {
+    var that = this;
+    that.setData({
+      nfcAvaliable: null
+    });
+    wx.startHCE({
+      aid_list: ['f222222222'],
+      success: function(res) {
         that.setData({
-            nfcAvaliable: null
+          nfcAvaliable: true
         });
-        wx.startHCE({
-            aid_list: ['f222222222'],
-            success: function (res) {
-                that.setData({
-                    nfcAvaliable: true
-                });
-                wx.onHCEMessage(function (res) {
-                    if (res.messageType === 1) {
-                        if (that.data.userToken === null) {
-                            return;
-                        }
-                        var request_str = 'f222222222' + that.data.userToken;
-                        wx.sendHCEMessage({ data: util.str2ab(request_str) });
-                        wx.hideLoading();
-                        that.setData({
-                            userToken: null
-                        });
-                    }
-                });
-            },
-            fail: function (res) {
-                that.setData({
-                    nfcAvaliable: false
-                });
+        wx.onHCEMessage(function(res) {
+          if (res.messageType === 1) {
+            if (that.data.userToken === null) {
+              return;
             }
+            var request_str = 'f222222222' + that.data.userToken;
+            wx.sendHCEMessage({
+              data: util.str2ab(request_str)
+            });
+            wx.hideLoading();
+            that.setData({
+              userToken: null
+            });
+          }
         });
-        setTimeout(function () {
-            if (that.data.nfcAvaliable == true && that.data.hasBound == true) {
-                wx.showLoading({
-                    title: '正在获取密钥',
-                    mask: true
-                });
-                wx.request({
-                    url: app.globalData.serverUrl,
-                    method: 'POST',
-                    data: {
-                        request: '102',
-                        code: app.globalData.userCode
-                    },
-                    header: {
-                        'content-type': 'application/json'
-                    },
-                    success: function (res) {
-                        wx.hideLoading();
-                        if (res.data.status === true) {
-                            that.setData({
-                                userToken: res.data.token
-                            });
-                            wx.showLoading({
-                                title: '请刷考勤机',
-                                mask: true
-                            });
-                        } else if (res.data.status === false) {
-                            wx.showToast({
-                                title: '不允许操作',
-                                icon: 'none',
-                                duration: 2000
-                            });
-                        } else if (res.data.status === null) {
-                            wx.showToast({
-                                title: '服务器故障',
-                                icon: 'none',
-                                duration: 2000
-                            });
-                        }
-                    },
-                    fail: function (res) {
-                        wx.hideLoading();
-                        wx.showToast({
-                            title: '网络故障，请稍后重试',
-                            icon: 'none',
-                            duration: 2000
-                        });
-                    }
-                });
-            }
-        }, 200);
-    },
-    // 学号输入事件
-    stuNumInput: function (e) {
-        this.setData({
-            stuNumIn: e.detail.value
+      },
+      fail: function(res) {
+        that.setData({
+          nfcAvaliable: false
         });
-    },
-    // 密码输入事件
-    stuPwdInput: function (e) {
-        this.setData({
-            stuPwdIn: e.detail.value
+      }
+    });
+    setTimeout(function() {
+      if (that.data.nfcAvaliable == true && that.data.hasBound == true) {
+        wx.showLoading({
+          title: '正在获取密钥',
+          mask: true
         });
-    },
-    // 绑定用户事件
-    bindBtn: function () {
-        var that = this;
-        if (this.data.stuNumIn == '') {
-            wx.showToast({
-                title: '请输入学号',
+        wx.request({
+          url: app.globalData.serverUrl,
+          method: 'POST',
+          data: {
+            request: '102',
+            code: app.globalData.userCode
+          },
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function(res) {
+            wx.hideLoading();
+            if (res.data.status === true) {
+              that.setData({
+                userToken: res.data.token
+              });
+              wx.showLoading({
+                title: '请刷考勤机',
+                mask: true
+              });
+            } else if (res.data.status === false) {
+              wx.showToast({
+                title: '不允许操作',
                 icon: 'none',
                 duration: 2000
-            });
-            return;
-        } else if (this.data.stuPwdIn == '') {
-            wx.showToast({
-                title: '请输入密码',
+              });
+            } else if (res.data.status === null) {
+              wx.showToast({
+                title: '服务器故障',
                 icon: 'none',
                 duration: 2000
-            });
-            return;
-        }
-        wx.showModal({
-            title: '提示',
-            content: '确认绑定学号 "' + that.data.stuNumIn + '"',
-            success: function (res) {
-                if (res.confirm) {
-                    wx.showLoading({
-                        title: '请稍候',
-                        mask: true
-                    });
-                    wx.request({
-                        url: app.globalData.serverUrl,
-                        method: 'POST',
-                        data: {
-                            request: '103',
-                            code: getApp().globalData.userCode,
-                            stuNum: that.data.stuNumIn,
-                            stuPwd: that.data.stuPwdIn
-                        },
-                        header: {
-                            'content-type': 'application/json'
-                        },
-                        success: function (res) {
-                            wx.hideLoading();
-                            if (res.data.status === true) {
-                                wx.showToast({
-                                    title: '绑定成功',
-                                    icon: 'success',
-                                    duration: 2000
-                                });
-                                that.setData({
-                                    stuNumIn: '',
-                                    stuPwdIn: ''
-                                });
-                            } else if (res.data.status === false) {
-                                wx.showToast({
-                                    title: res.data.errMsg,
-                                    icon: 'none',
-                                    duration: 2000
-                                });
-                            } else if (res.data.status === null) {
-                                wx.showToast({
-                                    title: '服务器故障',
-                                    icon: 'none',
-                                    duration: 2000
-                                });
-                            }
-                        },
-                        fail: function (res) {
-                            wx.hideLoading();
-                            wx.showToast({
-                                title: '网络故障，请稍后重试',
-                                icon: 'none',
-                                duration: 2000
-                            });
-                        }
-                    });
-                }
+              });
             }
-        });
-    },
-    // 解绑用户事件
-    unbindBtn: function () {
-        var that = this;
-        wx.showModal({
-            title: '提示',
-            content: '确认解绑您的学号 "' + that.data.stuNum + '"',
-            success: function (res) {
-                if (res.confirm) {
-                    wx.showLoading({
-                        title: '请稍候',
-                        mask: true
-                    });
-                    wx.request({
-                        url: app.globalData.serverUrl,
-                        method: 'POST',
-                        data: {
-                            request: '104',
-                            code: getApp().globalData.userCode,
-                            stuNum: that.data.stuNum
-                        },
-                        header: {
-                            'content-type': 'application/json'
-                        },
-                        success: function (res) {
-                            wx.hideLoading();
-                            if (res.data.status === true) {
-                                wx.showToast({
-                                    title: '解绑成功',
-                                    icon: 'success',
-                                    duration: 2000
-                                });
-                                that.setData({
-                                    stuNumIn: '',
-                                    stuPwdIn: ''
-                                });
-                            } else if (res.data.status === false) {
-                                wx.showToast({
-                                    title: res.data.errMsg,
-                                    icon: 'none',
-                                    duration: 2000
-                                });
-                            } else if (res.data.status === null) {
-                                wx.showToast({
-                                    title: '服务器故障',
-                                    icon: 'none',
-                                    duration: 2000
-                                });
-                            }
-                        },
-                        fail: function (res) {
-                            wx.hideLoading();
-                            wx.showToast({
-                                title: '网络故障，请稍后重试',
-                                icon: 'none',
-                                duration: 2000
-                            });
-                        }
-                    });
-                }
-            }
-        });
-    },
-    // 页面加载事件
-    onLoad: function () {
-        var that = this;
-        setInterval(function () {
-            wx.request({
-                url: app.globalData.serverUrl,
-                method: 'POST',
-                data: {
-                    request: '101',
-                    code: getApp().globalData.userCode
-                },
-                header: {
-                    'content-type': 'application/json'
-                },
-                success: function (res) {
-                    if (res.data.status === true) {
-                        that.setData({
-                            prompt: '请点击上方NFC标志签到',
-                            hasBound: true,
-                            stuNum: res.data.stuNum,
-                            lastTime: res.data.lastTime,
-                            lastLocation: res.data.lastLocation
-                        });
-                    } else if (res.data.status === false) {
-                        that.setData({
-                            prompt: '您未绑定学号，请在下方绑定',
-                            hasBound: false,
-                            stuNum: null,
-                            lastTime: null,
-                            lastLocation: null
-                        });
-                    } else if (res.data.status === null) {
-                        that.setData({
-                            prompt: '服务器故障',
-                            hasBound: null,
-                            stuNum: null,
-                            lastTime: null,
-                            lastLocation: null
-                        });
-                    }
-                }
+          },
+          fail: function(res) {
+            wx.hideLoading();
+            wx.showToast({
+              title: '网络故障，请稍后重试',
+              icon: 'none',
+              duration: 2000
             });
-        }, 1000);
-    },
-    // 页面恢复事件
-    onShow: function () {
-        wx.hideLoading();
-        this.setData({
-            userToken: null
+          }
         });
+      }
+    }, 200);
+  },
+  // 学号输入事件
+  stuNumInput: function(e) {
+    this.setData({
+      stuNumIn: e.detail.value
+    });
+  },
+  // 密码输入事件
+  stuPwdInput: function(e) {
+    this.setData({
+      stuPwdIn: e.detail.value
+    });
+  },
+  // 绑定用户事件
+  bindBtn: function() {
+    var that = this;
+    if (this.data.stuNumIn == '') {
+      wx.showToast({
+        title: '请输入学号',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    } else if (this.data.stuPwdIn == '') {
+      wx.showToast({
+        title: '请输入密码',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
     }
+    wx.showModal({
+      title: '提示',
+      content: '确认绑定学号 "' + that.data.stuNumIn + '"',
+      success: function(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '请稍候',
+            mask: true
+          });
+          wx.request({
+            url: app.globalData.serverUrl,
+            method: 'POST',
+            data: {
+              request: '103',
+              code: getApp().globalData.userCode,
+              stuNum: that.data.stuNumIn,
+              stuPwd: that.data.stuPwdIn
+            },
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function(res) {
+              wx.hideLoading();
+              if (res.data.status === true) {
+                wx.showToast({
+                  title: '绑定成功',
+                  icon: 'success',
+                  duration: 2000
+                });
+                that.setData({
+                  stuNumIn: '',
+                  stuPwdIn: ''
+                });
+              } else if (res.data.status === false) {
+                wx.showToast({
+                  title: res.data.errMsg,
+                  icon: 'none',
+                  duration: 2000
+                });
+              } else if (res.data.status === null) {
+                wx.showToast({
+                  title: '服务器故障',
+                  icon: 'none',
+                  duration: 2000
+                });
+              }
+            },
+            fail: function(res) {
+              wx.hideLoading();
+              wx.showToast({
+                title: '网络故障，请稍后重试',
+                icon: 'none',
+                duration: 2000
+              });
+            }
+          });
+        }
+      }
+    });
+  },
+  // 解绑用户事件
+  unbindBtn: function() {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确认解绑您的学号 "' + that.data.stuNum + '"',
+      success: function(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '请稍候',
+            mask: true
+          });
+          wx.request({
+            url: app.globalData.serverUrl,
+            method: 'POST',
+            data: {
+              request: '104',
+              code: getApp().globalData.userCode,
+              stuNum: that.data.stuNum
+            },
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function(res) {
+              wx.hideLoading();
+              if (res.data.status === true) {
+                wx.showToast({
+                  title: '解绑成功',
+                  icon: 'success',
+                  duration: 2000
+                });
+                that.setData({
+                  stuNumIn: '',
+                  stuPwdIn: ''
+                });
+              } else if (res.data.status === false) {
+                wx.showToast({
+                  title: res.data.errMsg,
+                  icon: 'none',
+                  duration: 2000
+                });
+              } else if (res.data.status === null) {
+                wx.showToast({
+                  title: '服务器故障',
+                  icon: 'none',
+                  duration: 2000
+                });
+              }
+            },
+            fail: function(res) {
+              wx.hideLoading();
+              wx.showToast({
+                title: '网络故障，请稍后重试',
+                icon: 'none',
+                duration: 2000
+              });
+            }
+          });
+        }
+      }
+    });
+  },
+  // 页面加载事件
+  onLoad: function() {
+    var that = this;
+    setInterval(function() {
+      wx.request({
+        url: app.globalData.serverUrl,
+        method: 'POST',
+        data: {
+          request: '101',
+          code: getApp().globalData.userCode
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function(res) {
+          if (res.data.status === true) {
+            that.setData({
+              prompt: '请点击上方NFC标志签到',
+              hasBound: true,
+              stuNum: res.data.stuNum,
+              lastTime: res.data.lastTime,
+              lastLocation: res.data.lastLocation
+            });
+          } else if (res.data.status === false) {
+            that.setData({
+              prompt: '您未绑定学号，请在下方绑定',
+              hasBound: false,
+              stuNum: null,
+              lastTime: null,
+              lastLocation: null
+            });
+          } else if (res.data.status === null) {
+            that.setData({
+              prompt: '服务器故障',
+              hasBound: null,
+              stuNum: null,
+              lastTime: null,
+              lastLocation: null
+            });
+          }
+        }
+      });
+    }, 1000);
+  },
+  // 页面恢复事件
+  onShow: function() {
+    wx.hideLoading();
+    this.setData({
+      userToken: null
+    });
+  }
 });

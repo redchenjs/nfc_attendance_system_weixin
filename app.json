@@ -1,11 +1,11 @@
 {
-    "pages": [
-        "pages/index/index"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "智慧校园NFC考勤系统",
-        "navigationBarTextStyle": "black"
-    }
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "智慧校园NFC考勤系统",
+    "navigationBarTextStyle": "black"
+  }
 }
