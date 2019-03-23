@@ -268,7 +268,7 @@ Page({
                 success: function (res) {
                     if (res.data.status === true) {
                         that.setData({
-                            prompt: '您已绑定学号，点击上方NFC标志签到',
+                            prompt: '请点击上方NFC标志签到',
                             hasBound: true,
                             stuNum: res.data.stuNum,
                             lastTime: res.data.lastTime,
