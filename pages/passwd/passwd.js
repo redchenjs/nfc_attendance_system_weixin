@@ -37,6 +37,14 @@ Page({
         mask: false
       });
       return;
+    } else if (this.data.oldPwdIn === this.data.newPwdIn) {
+      wx.showToast({
+        title: '新密码不能与旧密码相同',
+        icon: 'none',
+        duration: 2000,
+        mask: false
+      });
+      return;
     }
     wx.showModal({
       title: '提示',
