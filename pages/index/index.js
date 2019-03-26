@@ -37,6 +37,12 @@ Page({
               data: util.str2ab(request_str)
             });
             wx.hideLoading();
+            wx.showToast({
+              title: '数据传输完成',
+              icon: 'success',
+              duration: 1000,
+              mask: true
+            });
             that.setData({
               userToken: null
             });
@@ -72,29 +78,32 @@ Page({
                 userToken: res.data.token
               });
               wx.showLoading({
-                title: '请刷考勤机',
+                title: '请刷考勤终端',
                 mask: true
               });
             } else if (res.data.status === false) {
               wx.showToast({
-                title: '不允许操作',
+                title: res.data.errMsg,
                 icon: 'none',
-                duration: 2000
+                duration: 2000,
+                mask: true
               });
-            } else if (res.data.status === null) {
+            } else {
               wx.showToast({
-                title: '服务器故障',
+                title: '系统维护中，请稍后再试',
                 icon: 'none',
-                duration: 2000
+                duration: 2000,
+                mask: true
               });
             }
           },
           fail: function(res) {
             wx.hideLoading();
             wx.showToast({
-              title: '网络故障，请稍后重试',
+              title: '网络故障',
               icon: 'none',
-              duration: 2000
+              duration: 2000,
+              mask: true
             });
           }
         });
@@ -120,14 +129,16 @@ Page({
       wx.showToast({
         title: '请输入学号',
         icon: 'none',
-        duration: 2000
+        duration: 2000,
+        mask: true
       });
       return;
     } else if (this.data.stuPwdIn == '') {
       wx.showToast({
         title: '请输入密码',
         icon: 'none',
-        duration: 2000
+        duration: 2000,
+        mask: true
       });
       return;
     }
@@ -156,9 +167,10 @@ Page({
               wx.hideLoading();
               if (res.data.status === true) {
                 wx.showToast({
-                  title: '绑定成功',
+                  title: '微信绑定成功',
                   icon: 'success',
-                  duration: 2000
+                  duration: 2000,
+                  mask: true
                 });
                 that.setData({
                   stuNumIn: '',
@@ -168,22 +180,25 @@ Page({
                 wx.showToast({
                   title: res.data.errMsg,
                   icon: 'none',
-                  duration: 2000
+                  duration: 2000,
+                  mask: true
                 });
-              } else if (res.data.status === null) {
+              } else {
                 wx.showToast({
-                  title: '服务器故障',
+                  title: '系统维护中，请稍后再试',
                   icon: 'none',
-                  duration: 2000
+                  duration: 2000,
+                  mask: true
                 });
               }
             },
             fail: function(res) {
               wx.hideLoading();
               wx.showToast({
-                title: '网络故障，请稍后重试',
+                title: '网络故障',
                 icon: 'none',
-                duration: 2000
+                duration: 2000,
+                mask: true
               });
             }
           });
@@ -218,9 +233,10 @@ Page({
               wx.hideLoading();
               if (res.data.status === true) {
                 wx.showToast({
-                  title: '解绑成功',
+                  title: '微信解绑成功',
                   icon: 'success',
-                  duration: 2000
+                  duration: 2000,
+                  mask: true
                 });
                 that.setData({
                   stuNumIn: '',
@@ -230,22 +246,25 @@ Page({
                 wx.showToast({
                   title: res.data.errMsg,
                   icon: 'none',
-                  duration: 2000
+                  duration: 2000,
+                  mask: true
                 });
-              } else if (res.data.status === null) {
+              } else {
                 wx.showToast({
-                  title: '服务器故障',
+                  title: '系统维护中，请稍后再试',
                   icon: 'none',
-                  duration: 2000
+                  duration: 2000,
+                  mask: true
                 });
               }
             },
             fail: function(res) {
               wx.hideLoading();
               wx.showToast({
-                title: '网络故障，请稍后重试',
+                title: '网络故障',
                 icon: 'none',
-                duration: 2000
+                duration: 2000,
+                mask: true
               });
             }
           });
@@ -284,9 +303,9 @@ Page({
               lastTime: null,
               lastLocation: null
             });
-          } else if (res.data.status === null) {
+          } else {
             that.setData({
-              prompt: '服务器故障',
+              prompt: '当前会话已过期，请重启小程序',
               hasBound: null,
               stuNum: null,
               lastTime: null,
