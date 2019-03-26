@@ -1,30 +1,30 @@
 {
-  "description": "项目配置文件。",
-  "setting": {
-    "urlCheck": true,
-    "es6": true,
-    "postcss": true,
-    "minified": true,
-    "newFeature": true,
-    "autoAudits": false,
-    "uglifyFileName": true
-  },
-  "compileType": "miniprogram",
-  "libVersion": "1.7.0",
-  "appid": "wx8d7f06fb7ba10c2d",
-  "projectname": "nfc_attendance_system",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": -1,
-      "list": []
-    }
-  }
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false,
+		"uglifyFileName": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.7.0",
+	"appid": "wx8d7f06fb7ba10c2d",
+	"projectname": "nfc_attendance_system",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
 }
