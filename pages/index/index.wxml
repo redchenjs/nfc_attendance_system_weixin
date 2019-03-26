@@ -11,7 +11,7 @@
       <text class="userid_text">学号: {{stuNum}}\n</text>
     </view>
     <view class="input">
-      <button class="button" bindtap="unbindBtn">解绑</button>
+      <button class="user_button" bindtap="userBtn">个人中心</button>
     </view>
     <view class="info">
       <text class="info_time">最后签到时间: {{lastTime}}\n</text>
@@ -21,8 +21,8 @@
   <block wx:elif="{{hasBound!=null}}">
     <view class="input">
       <input class="inputbox" bindinput="stuNumInput" maxlength="10" type="text" name="stuNum" placeholder="学号" />
-      <input class="inputbox" bindinput="stuPwdInput" maxlength="6" type="idcard" password name="stuPwd" placeholder="密码" />
-      <button class="button" bindtap="bindBtn">绑定</button>
+      <input class="inputbox" bindinput="stuPwdInput" maxlength="6" type="number" password name="stuPwd" placeholder="密码" />
+      <button class="submit_button" bindtap="submitBtn">提交</button>
     </view>
   </block>
 </view>

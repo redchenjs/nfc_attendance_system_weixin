@@ -1,4 +1,4 @@
-/**index.wxss**/
+/* passwd.wxss */
 
 .cover {
   display: flex;
@@ -17,6 +17,10 @@
   margin-top: 50px;
 }
 
+.prompt_text {
+  color: #f00;
+}
+
 .input {
   margin: 50rpx;
   width: 256rpx;
@@ -30,26 +34,8 @@
   border-style: solid;
 }
 
-.userid {
-  margin-top: 20px;
-}
-
-.userid_text {
-  color: #aaa;
-}
-
 .submit_button {
   margin-top: 30px;
   margin-left: 15%;
   margin-right: 15%;
-}
-
-.user_button {
-  margin-top: 30px;
-  margin-left: 10%;
-  margin-right: 10%;
-}
-
-.info {
-  margin-top: 0px;
 }

@@ -40,7 +40,7 @@ Page({
             wx.showToast({
               title: '数据传输完成',
               icon: 'success',
-              duration: 1000,
+              duration: 1500,
               mask: true
             });
             that.setData({
@@ -56,7 +56,7 @@ Page({
       }
     });
     setTimeout(function() {
-      if (that.data.nfcAvaliable == true && that.data.hasBound == true) {
+      if (that.data.nfcAvaliable === true && that.data.hasBound === true) {
         wx.showLoading({
           title: '正在获取密钥',
           mask: true
@@ -108,7 +108,7 @@ Page({
           }
         });
       }
-    }, 200);
+    }, 250);
   },
   // 学号输入事件
   stuNumInput: function(e) {
@@ -122,23 +122,23 @@ Page({
       stuPwdIn: e.detail.value
     });
   },
-  // 绑定用户事件
-  bindBtn: function() {
+  // 提交按钮事件
+  submitBtn: function() {
     var that = this;
-    if (this.data.stuNumIn == '') {
+    if (this.data.stuNumIn === '') {
       wx.showToast({
         title: '请输入学号',
         icon: 'none',
         duration: 2000,
-        mask: true
+        mask: false
       });
       return;
-    } else if (this.data.stuPwdIn == '') {
+    } else if (this.data.stuPwdIn === '') {
       wx.showToast({
         title: '请输入密码',
         icon: 'none',
         duration: 2000,
-        mask: true
+        mask: false
       });
       return;
     }
@@ -146,6 +146,9 @@ Page({
       title: '提示',
       content: '确认绑定学号 "' + that.data.stuNumIn + '"',
       success: function(res) {
+        if (that.data.stuNum === null) {
+          return;
+        }
         if (res.confirm) {
           wx.showLoading({
             title: '请稍候',
@@ -156,7 +159,7 @@ Page({
             method: 'POST',
             data: {
               request: '103',
-              code: getApp().globalData.userCode,
+              code: app.globalData.userCode,
               stuNum: that.data.stuNumIn,
               stuPwd: that.data.stuPwdIn
             },
@@ -167,7 +170,7 @@ Page({
               wx.hideLoading();
               if (res.data.status === true) {
                 wx.showToast({
-                  title: '微信绑定成功',
+                  title: '学号绑定成功',
                   icon: 'success',
                   duration: 2000,
                   mask: true
@@ -206,68 +209,90 @@ Page({
       }
     });
   },
-  // 解绑用户事件
-  unbindBtn: function() {
+  // 个人中心按钮事件
+  userBtn: function() {
     var that = this;
-    wx.showModal({
-      title: '提示',
-      content: '确认解绑您的学号 "' + that.data.stuNum + '"',
-      success: function(res) {
-        if (res.confirm) {
-          wx.showLoading({
-            title: '请稍候',
-            mask: true
-          });
-          wx.request({
-            url: app.globalData.serverUrl,
-            method: 'POST',
-            data: {
-              request: '104',
-              code: getApp().globalData.userCode,
-              stuNum: that.data.stuNum
-            },
-            header: {
-              'content-type': 'application/json'
-            },
-            success: function(res) {
-              wx.hideLoading();
-              if (res.data.status === true) {
-                wx.showToast({
-                  title: '微信解绑成功',
-                  icon: 'success',
-                  duration: 2000,
-                  mask: true
-                });
-                that.setData({
-                  stuNumIn: '',
-                  stuPwdIn: ''
-                });
-              } else if (res.data.status === false) {
-                wx.showToast({
-                  title: res.data.errMsg,
-                  icon: 'none',
-                  duration: 2000,
-                  mask: true
-                });
-              } else {
-                wx.showToast({
-                  title: '系统维护中，请稍后再试',
-                  icon: 'none',
-                  duration: 2000,
-                  mask: true
-                });
+    wx.showActionSheet({
+      itemList: ['修改密码', '解绑学号'],
+      success(res) {
+        if (that.data.stuNum === null) {
+          return;
+        }
+        switch (res.tapIndex) {
+          case 0:
+            wx.navigateTo({
+              url: '../passwd/passwd?stuNum=' + that.data.stuNum
+            });
+            break;
+          case 1:
+            wx.showModal({
+              title: '提示',
+              content: '确认解绑您的学号 "' + that.data.stuNum + '"',
+              success: function(res) {
+                if (that.data.stuNum === null) {
+                  return;
+                }
+                if (res.confirm) {
+                  wx.showLoading({
+                    title: '请稍候',
+                    mask: true
+                  });
+                  wx.request({
+                    url: app.globalData.serverUrl,
+                    method: 'POST',
+                    data: {
+                      request: '104',
+                      code: app.globalData.userCode,
+                      stuNum: that.data.stuNum
+                    },
+                    header: {
+                      'content-type': 'application/json'
+                    },
+                    success: function(res) {
+                      wx.hideLoading();
+                      if (res.data.status === true) {
+                        wx.showToast({
+                          title: '学号解绑成功',
+                          icon: 'success',
+                          duration: 2000,
+                          mask: true
+                        });
+                        that.setData({
+                          stuNumIn: '',
+                          stuPwdIn: ''
+                        });
+                      } else if (res.data.status === false) {
+                        wx.showToast({
+                          title: res.data.errMsg,
+                          icon: 'none',
+                          duration: 2000,
+                          mask: true
+                        });
+                      } else {
+                        wx.showToast({
+                          title: '系统维护中，请稍后再试',
+                          icon: 'none',
+                          duration: 2000,
+                          mask: true
+                        });
+                      }
+                    },
+                    fail: function(res) {
+                      wx.hideLoading();
+                      wx.showToast({
+                        title: '网络故障',
+                        icon: 'none',
+                        duration: 2000,
+                        mask: true
+                      });
+                    }
+                  });
+                }
               }
-            },
-            fail: function(res) {
-              wx.hideLoading();
-              wx.showToast({
-                title: '网络故障',
-                icon: 'none',
-                duration: 2000,
-                mask: true
-              });
-            }
-          });
+            });
+            break;
+          default:
+            break;
         }
       }
     });
@@ -275,13 +300,13 @@ Page({
   // 页面加载事件
   onLoad: function() {
     var that = this;
-    setInterval(function() {
+    var timer = setInterval(function() {
       wx.request({
         url: app.globalData.serverUrl,
         method: 'POST',
         data: {
           request: '101',
-          code: getApp().globalData.userCode
+          code: app.globalData.userCode
         },
         header: {
           'content-type': 'application/json'
@@ -298,19 +323,32 @@ Page({
           } else if (res.data.status === false) {
             that.setData({
               prompt: '您未绑定学号，请在下方绑定',
+              userToken: null,
               hasBound: false,
-              stuNum: null,
+              stuNum: '',
               lastTime: null,
               lastLocation: null
             });
           } else {
             that.setData({
-              prompt: '当前会话已过期，请重启小程序',
+              prompt: '检测到重复微信登录，您已被强制下线',
+              userToken: null,
               hasBound: null,
               stuNum: null,
               lastTime: null,
               lastLocation: null
             });
+            wx.hideToast();
+            wx.hideLoading();
+            var pages = getCurrentPages();
+            var currentPage = pages[pages.length - 1];
+            currentPage.setData({
+              stuNum: null
+            });
+            wx.navigateBack({
+              delta: 1
+            });
+            clearInterval(timer);
           }
         }
       });
