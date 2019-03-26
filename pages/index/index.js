@@ -331,7 +331,7 @@ Page({
             });
           } else {
             that.setData({
-              prompt: '检测到重复微信登录，您已被强制下线',
+              prompt: '检测到重复登录，您已被强制下线',
               userToken: null,
               hasBound: null,
               stuNum: null,
