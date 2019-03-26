@@ -95,14 +95,14 @@ Page({
                   title: res.data.errMsg,
                   icon: 'none',
                   duration: 2000,
-                  mask: true
+                  mask: false
                 });
               } else {
                 wx.showToast({
                   title: '系统维护中，请稍后再试',
                   icon: 'none',
                   duration: 2000,
-                  mask: true
+                  mask: false
                 });
               }
             },
@@ -112,7 +112,7 @@ Page({
                 title: '网络故障',
                 icon: 'none',
                 duration: 2000,
-                mask: true
+                mask: false
               });
             }
           });
