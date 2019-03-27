@@ -81,7 +81,6 @@ Page({
                   mask: true
                 });
                 that.setData({
-                  stuNum: null,
                   oldPwdIn: '',
                   newPwdIn: '',
                   newPwd2In: ''
