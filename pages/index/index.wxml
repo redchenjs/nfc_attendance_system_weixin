@@ -14,8 +14,8 @@
       <button class="user_button" bindtap="userBtn">个人中心</button>
     </view>
     <view class="info">
-      <text class="info_time">最后签到时间: {{lastTime}}\n</text>
-      <text class="info_location">最后签到位置: {{lastLocation}}</text>
+      <text class="info_text">最后签到时间: {{lastTime}}\n</text>
+      <text class="info_text">最后签到位置: {{lastLocation}}</text>
     </view>
   </block>
   <block wx:elif="{{hasBound!=null}}">

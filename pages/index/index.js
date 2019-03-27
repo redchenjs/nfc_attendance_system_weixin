@@ -331,7 +331,7 @@ Page({
             });
           } else {
             that.setData({
-              prompt: '检测到重复登录，您已被强制下线',
+              prompt: '当前会话已过期，请重启微信后再试',
               userToken: null,
               hasBound: null,
               stuNum: null,
