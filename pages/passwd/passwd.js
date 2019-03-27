@@ -88,7 +88,7 @@ Page({
                 setTimeout(function() {
                   wx.showModal({
                     title: '提示',
-                    content: '您的学号已自动与当前微信解绑，请使用新密码重新绑定学号',
+                    content: '您的学号已自动解绑，请使用新密码重新绑定',
                     showCancel: false,
                     complete(res) {
                       wx.navigateBack({
