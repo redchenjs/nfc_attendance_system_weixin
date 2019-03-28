@@ -11,7 +11,7 @@
       <text class="userid_text">学号: {{stuNum}}\n</text>
     </view>
     <view class="input">
-      <button class="user_button" bindtap="userBtn">个人中心</button>
+      <button class="option_button" bindtap="optionBtn">选项</button>
     </view>
     <view class="info">
       <text class="info_text">最后签到时间: {{lastTime}}\n</text>

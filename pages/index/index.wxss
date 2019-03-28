@@ -44,10 +44,10 @@
   margin-right: 60rpx;
 }
 
-.user_button {
+.option_button {
   margin-top: 50rpx;
-  margin-left: 50rpx;
-  margin-right: 50rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
 }
 
 .info {

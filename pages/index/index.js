@@ -209,8 +209,8 @@ Page({
       }
     });
   },
-  // 个人中心按钮事件
-  userBtn: function() {
+  // 选项按钮事件
+  optionBtn: function() {
     var that = this;
     wx.showActionSheet({
       itemList: ['修改密码', '解绑学号'],
