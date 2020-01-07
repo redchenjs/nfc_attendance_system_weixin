@@ -8,5 +8,7 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "智慧校园NFC考勤系统",
     "navigationBarTextStyle": "black"
-  }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
 }
