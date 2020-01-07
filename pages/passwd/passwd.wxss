@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-.cover_image {
+.cover-image {
   width: 200rpx;
   height: 200rpx;
   margin: 20rpx;
@@ -17,7 +17,7 @@
   margin-top: 50rpx;
 }
 
-.prompt_text {
+.prompt-text {
   color: #f00;
 }
 
@@ -34,7 +34,7 @@
   border-radius: 9rpx;
 }
 
-.submit_button {
+.submit-button {
   margin-top: 50rpx;
   margin-left: 60rpx;
   margin-right: 60rpx;

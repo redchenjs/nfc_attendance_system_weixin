@@ -146,9 +146,9 @@ Page({
     });
   },
   // 页面加载事件
-  onLoad: function(options) {
+  onLoad: function(e) {
     this.setData({
-      stuNum: options.stuNum
+      stuNum: e.stuNum
     });
   }
 });

@@ -1,28 +1,28 @@
 <!--index.wxml-->
 <view class="container">
   <view class="cover">
-    <image bindtap="coverTap" class="cover_image" src="index.png" background-size="cover"></image>
+    <image bindtap="coverTap" class="cover-image" src="index.png" background-size="cover"></image>
   </view>
   <view class="prompt">
-    <text class="prompt_text">{{prompt}}</text>
+    <text class="prompt-text">{{prompt}}</text>
   </view>
   <block wx:if="{{hasBound}}">
     <view class="userid">
-      <text class="userid_text">学号: {{stuNum}}\n</text>
+      <text class="userid-text">学号: {{stuNum}}\n</text>
     </view>
     <view class="input">
-      <button class="option_button" bindtap="optionBtn">选项</button>
+      <button class="option-button" bindtap="optionBtn">选项</button>
     </view>
     <view class="info">
-      <text class="info_text">最后签到时间: {{lastTime}}\n</text>
-      <text class="info_text">最后签到位置: {{lastLocation}}</text>
+      <text class="info-text">最后签到时间: {{lastTime}}\n</text>
+      <text class="info-text">最后签到位置: {{lastLocation}}</text>
     </view>
   </block>
   <block wx:elif="{{hasBound!=null}}">
     <view class="input">
       <input class="inputbox" bindinput="stuNumInput" maxlength="10" type="text" name="stuNum" placeholder="学号" />
       <input class="inputbox" bindinput="stuPwdInput" maxlength="6" type="number" password name="stuPwd" placeholder="密码" />
-      <button class="submit_button" bindtap="submitBtn">提交</button>
+      <button class="submit-button" bindtap="submitBtn">提交</button>
     </view>
   </block>
 </view>

@@ -1,15 +1,15 @@
 <!--passwd.wxml-->
 <view class="container">
   <view class="cover">
-    <image class="cover_image" src="passwd.png" background-size="cover"></image>
+    <image class="cover-image" src="passwd.png" background-size="cover"></image>
   </view>
   <view class="prompt">
-    <text class="prompt_text">正在修改 {{stuNum}} 的密码\n</text>
+    <text class="prompt-text">正在修改 {{stuNum}} 的密码\n</text>
   </view>
   <view class="input">
     <input class="inputbox" bindinput="oldPwdInput" maxlength="6" type="number" password name="oldPwd" placeholder="原密码" />
     <input class="inputbox" bindinput="newPwdInput" maxlength="6" type="number" password name="newPwd" placeholder="新密码" />
     <input class="inputbox" bindinput="newPwd2Input" maxlength="6" type="number" password name="newPwd2" placeholder="重复新密码" />
-    <button class="submit_button" bindtap="submitBtn">提交</button>
+    <button class="submit-button" bindtap="submitBtn">提交</button>
   </view>
 </view>
