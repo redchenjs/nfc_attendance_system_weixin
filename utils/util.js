@@ -20,7 +20,7 @@ function ab2hex(buf) {
 }
 
 function ab2str(buf) {
-  return String.fromCharCode.apply(null, new Uint16Array(buf));
+  return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
 
 function str2ab(str) {
@@ -36,5 +36,5 @@ module.exports = {
   formatTime: formatTime,
   ab2hex: ab2hex,
   ab2str: ab2str,
-  str2ab: str2ab,
+  str2ab: str2ab
 }
