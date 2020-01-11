@@ -13,7 +13,7 @@
   border-radius: 50%;
 }
 
-.prompt {
+.prompt-text-view {
   margin-top: 50rpx;
 }
 
@@ -29,9 +29,9 @@
   color: #aaa;
 }
 
-.input {
+.inputbox-view {
   width: 300rpx;
-  margin: 75rpx;
+  margin-top: 75rpx;
 }
 
 .inputbox {
@@ -42,20 +42,26 @@
   border-radius: 9rpx;
 }
 
+.submit-button-view {
+  margin-top: 60rpx;
+}
+
 .submit-button {
-  margin-top: 50rpx;
-  margin-left: 60rpx;
-  margin-right: 60rpx;
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+}
+
+.option-button-view {
+  margin-top: 100rpx;
 }
 
 .option-button {
-  margin-top: 50rpx;
-  margin-left: 60rpx;
-  margin-right: 60rpx;
+  margin-left: 25rpx;
+  margin-right: 25rpx;
 }
 
-.info {
-  margin-top: 25rpx;
+.info-text-view {
+  margin-top: 100rpx;
 }
 
 .info-text {

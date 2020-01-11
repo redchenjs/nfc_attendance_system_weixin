@@ -331,7 +331,7 @@ Page({
             });
           } else {
             that.setData({
-              prompt: '当前会话异常，请重启微信后再试',
+              prompt: '当前会话异常，请重启小程序后再试',
               userToken: null,
               hasBound: null,
               stuNum: null,
