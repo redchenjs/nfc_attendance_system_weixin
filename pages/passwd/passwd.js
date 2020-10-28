@@ -1,6 +1,6 @@
 // passwd.js
-// 获取应用实例
-const app = getApp();
+
+import { reqCode } from '../../app.js';
 
 Page({
   data: {
@@ -10,9 +10,10 @@ Page({
     newPwd2In: ''
   },
   // 提交按钮事件
-  submitBtn: function() {
+  submitBtn() {
     var that = this;
-    if (this.data.oldPwdIn === '') {
+
+    if (that.data.oldPwdIn === '') {
       wx.showToast({
         title: '请输入原密码',
         icon: 'none',
@@ -20,7 +21,7 @@ Page({
         mask: false
       });
       return;
-    } else if (this.data.newPwdIn === '' || this.data.newPwd2In === '') {
+    } else if (that.data.newPwdIn === '' || that.data.newPwd2In === '') {
       wx.showToast({
         title: '新密码不能为空',
         icon: 'none',
@@ -29,7 +30,8 @@ Page({
       });
       return;
     }
-    if (this.data.newPwdIn !== this.data.newPwd2In) {
+
+    if (that.data.newPwdIn !== that.data.newPwd2In) {
       wx.showToast({
         title: '两次输入的新密码不一致',
         icon: 'none',
@@ -37,7 +39,7 @@ Page({
         mask: false
       });
       return;
-    } else if (this.data.oldPwdIn === this.data.newPwdIn) {
+    } else if (that.data.oldPwdIn === that.data.newPwdIn) {
       wx.showToast({
         title: '新密码不能与旧密码相同',
         icon: 'none',
@@ -46,33 +48,35 @@ Page({
       });
       return;
     }
+
     wx.showModal({
       title: '提示',
       content: '确认修改学号 "' + that.data.stuNum + '" 的密码',
-      success: function(res) {
-        if (that.data.stuNum === null) {
-          return;
-        }
-        if (res.confirm) {
+      success(res) {
+        if (res.confirm && that.data.stuNum !== null) {
           wx.showLoading({
             title: '请稍候',
             mask: true
           });
+          // 修改密码请求
           wx.request({
-            url: app.globalData.serverUrl,
+            url: getApp().globalData.serverUrl,
             method: 'POST',
             data: {
-              request: '106',
-              code: app.globalData.userCode,
-              stuNum: that.data.stuNum,
-              oldPwd: that.data.oldPwdIn,
-              newPwd: that.data.newPwdIn
+              request: reqCode.HTTP_REQ_CODE_APP_UPDATE_PSWD,
+              wx_code: getApp().globalData.userCode,
+              user_id: that.data.stuNum,
+              old_passwd: that.data.oldPwdIn,
+              new_passwd: that.data.newPwdIn
             },
             header: {
               'content-type': 'application/json'
             },
-            success: function(res) {
-              wx.hideLoading();
+            // 修改密码请求成功
+            success(res) {
+              wx.hideLoading({
+                complete(res) { /* empty statement */ }
+              });
               if (res.data.status === true) {
                 wx.showToast({
                   title: '密码修改成功',
@@ -85,7 +89,7 @@ Page({
                   newPwdIn: '',
                   newPwd2In: ''
                 });
-                setTimeout(function() {
+                setTimeout(function () {
                   wx.showModal({
                     title: '提示',
                     content: '您的学号已自动解绑，请使用新密码重新绑定',
@@ -99,7 +103,7 @@ Page({
                 }, 2100);
               } else if (res.data.status === false) {
                 wx.showToast({
-                  title: res.data.errMsg,
+                  title: res.data.hints,
                   icon: 'none',
                   duration: 2000,
                   mask: false
@@ -113,14 +117,21 @@ Page({
                 });
               }
             },
-            fail: function(res) {
-              wx.hideLoading();
+            // 修改密码请求失败
+            fail(res) {
+              wx.hideLoading({
+                complete(res) { /* empty statement */ }
+              });
               wx.showToast({
                 title: '网络故障',
                 icon: 'none',
                 duration: 2000,
                 mask: false
               });
+            },
+            // 修改密码请求完成
+            complete(res) {
+              console.log(res.errMsg);
             }
           });
         }
@@ -128,25 +139,25 @@ Page({
     });
   },
   // 原密码输入事件
-  oldPwdInput: function(e) {
+  oldPwdInput(e) {
     this.setData({
       oldPwdIn: e.detail.value
     });
   },
   // 新密码输入事件
-  newPwdInput: function(e) {
+  newPwdInput(e) {
     this.setData({
       newPwdIn: e.detail.value
     });
   },
   // 确认新密码输入事件
-  newPwd2Input: function(e) {
+  newPwd2Input(e) {
     this.setData({
       newPwd2In: e.detail.value
     });
   },
   // 页面加载事件
-  onLoad: function(e) {
+  onLoad(e) {
     this.setData({
       stuNum: e.stuNum
     });

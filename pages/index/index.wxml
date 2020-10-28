@@ -18,7 +18,7 @@
       <text class="info-text">最后签到位置: {{lastLocation}}</text>
     </view>
   </block>
-  <block wx:elif="{{hasBound!=null}}">
+  <block wx:elif="{{hasBound != null}}">
     <view class="inputbox-view">
       <input class="inputbox" bindinput="stuNumInput" maxlength="10" type="text" name="stuNum" placeholder="学号" />
       <input class="inputbox" bindinput="stuPwdInput" maxlength="6" type="number" password name="stuPwd" placeholder="密码" />
