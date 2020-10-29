@@ -66,8 +66,10 @@ Page({
       },
       // 开启HCE失败
       fail(res) {
-        that.setData({
-          avaliable: false
+        wx.showModal({
+          title: '提示',
+          content: '请检查NFC开关是否打开',
+          showCancel: false
         });
       },
       // 开启HCE完成
