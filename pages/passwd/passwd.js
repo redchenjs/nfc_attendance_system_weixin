@@ -1,7 +1,5 @@
 // passwd.js
 
-import { reqCode } from '../../app.js';
-
 Page({
   data: {
     stuNum: null,
@@ -63,7 +61,7 @@ Page({
             url: getApp().globalData.serverUrl,
             method: 'POST',
             data: {
-              request: reqCode.HTTP_REQ_CODE_APP_UPDATE_PSWD,
+              request: getApp().globalData.reqCode.HTTP_REQ_CODE_APP_UPDATE_PSWD,
               wx_code: getApp().globalData.userCode,
               user_id: that.data.stuNum,
               old_passwd: that.data.oldPwdIn,

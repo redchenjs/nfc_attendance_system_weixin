@@ -1,6 +1,5 @@
 // index.js
 
-import { reqCode } from '../../app.js';
 import { str2ab } from '../../utils/util.js';
 
 const RX_FRAME_PRFX = 'FF55AA55AA';
@@ -89,7 +88,7 @@ Page({
           url: getApp().globalData.serverUrl,
           method: 'POST',
           data: {
-            request: reqCode.HTTP_REQ_CODE_APP_GET_TOKEN,
+            request: getApp().globalData.reqCode.HTTP_REQ_CODE_APP_GET_TOKEN,
             wx_code: getApp().globalData.userCode
           },
           header: {
@@ -201,7 +200,7 @@ Page({
             url: getApp().globalData.serverUrl,
             method: 'POST',
             data: {
-              request: reqCode.HTTP_REQ_CODE_APP_BIND_USER,
+              request: getApp().globalData.reqCode.HTTP_REQ_CODE_APP_BIND_USER,
               wx_code: getApp().globalData.userCode,
               user_id: that.data.stuNumIn,
               user_passwd: that.data.stuPwdIn
@@ -291,7 +290,7 @@ Page({
                       url: getApp().globalData.serverUrl,
                       method: 'POST',
                       data: {
-                        request: reqCode.HTTP_REQ_CODE_APP_UNBIND_USER,
+                        request: getApp().globalData.reqCode.HTTP_REQ_CODE_APP_UNBIND_USER,
                         wx_code: getApp().globalData.userCode,
                         user_id: that.data.stuNum
                       },
@@ -368,7 +367,7 @@ Page({
         url: getApp().globalData.serverUrl,
         method: 'POST',
         data: {
-          request: reqCode.HTTP_REQ_CODE_APP_GET_INFO,
+          request: getApp().globalData.reqCode.HTTP_REQ_CODE_APP_GET_INFO,
           wx_code: getApp().globalData.userCode
         },
         header: {
