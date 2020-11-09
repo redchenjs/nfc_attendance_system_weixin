@@ -361,7 +361,7 @@ Page({
   onLoad() {
     var that = this;
 
-    var timer = setInterval(function () {
+    setInterval(function () {
       // 获取用户信息
       wx.request({
         url: getApp().globalData.serverUrl,
@@ -394,7 +394,7 @@ Page({
             });
           } else {
             that.setData({
-              prompt: '当前会话异常，请重启应用后再试',
+              prompt: '正在加载数据，请稍候...',
               userToken: null,
               hasBound: null,
               stuNum: null,
@@ -412,7 +412,11 @@ Page({
                 delta: 1
               });
             }
-            clearInterval(timer);
+            wx.login({
+              success(res) {
+                getApp().globalData.userCode = res.code;
+              }
+            });
           }
         },
         // 获取用户信息完成
