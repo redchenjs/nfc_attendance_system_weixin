@@ -75,7 +75,7 @@ Page({
               wx.hideLoading({
                 complete(res) { /* empty statement */ }
               });
-              if (res.data.status === true) {
+              if (res.data.result === true) {
                 wx.showToast({
                   title: '密码修改成功',
                   icon: 'success',
@@ -99,9 +99,9 @@ Page({
                     }
                   });
                 }, 2100);
-              } else if (res.data.status === false) {
+              } else if (res.data.result === false) {
                 wx.showToast({
-                  title: res.data.hints,
+                  title: res.data.errmsg,
                   icon: 'none',
                   duration: 2000,
                   mask: false

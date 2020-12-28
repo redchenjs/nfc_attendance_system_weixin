@@ -99,7 +99,7 @@ Page({
             wx.hideLoading({
               complete(res) { /* empty statement */ }
             });
-            if (res.data.status === true) {
+            if (res.data.result === true) {
               that.setData({
                 userToken: res.data.user_token
               });
@@ -107,9 +107,9 @@ Page({
                 title: '请刷考勤终端',
                 mask: true
               });
-            } else if (res.data.status === false) {
+            } else if (res.data.result === false) {
               wx.showToast({
-                title: res.data.hints,
+                title: res.data.errmsg,
                 icon: 'none',
                 duration: 2000,
                 mask: false
@@ -213,7 +213,7 @@ Page({
               wx.hideLoading({
                 complete(res) { /* empty statement */ }
               });
-              if (res.data.status === true) {
+              if (res.data.result === true) {
                 wx.showToast({
                   title: '学号绑定成功',
                   icon: 'success',
@@ -224,9 +224,9 @@ Page({
                   stuNumIn: '',
                   stuPwdIn: ''
                 });
-              } else if (res.data.status === false) {
+              } else if (res.data.result === false) {
                 wx.showToast({
-                  title: res.data.hints,
+                  title: res.data.errmsg,
                   icon: 'none',
                   duration: 2000,
                   mask: false
@@ -302,7 +302,7 @@ Page({
                         wx.hideLoading({
                           complete(res) { /* empty statement */ }
                         });
-                        if (res.data.status === true) {
+                        if (res.data.result === true) {
                           wx.showToast({
                             title: '学号解绑成功',
                             icon: 'success',
@@ -313,9 +313,9 @@ Page({
                             stuNumIn: '',
                             stuPwdIn: ''
                           });
-                        } else if (res.data.status === false) {
+                        } else if (res.data.result === false) {
                           wx.showToast({
-                            title: res.data.hints,
+                            title: res.data.errmsg,
                             icon: 'none',
                             duration: 2000,
                             mask: false
@@ -375,7 +375,7 @@ Page({
         },
         // 获取用户信息成功
         success(res) {
-          if (res.data.status === true) {
+          if (res.data.result === true) {
             that.setData({
               prompt: '请点击上方NFC标志签到',
               hasBound: true,
@@ -383,7 +383,7 @@ Page({
               lastTime: res.data.last_time,
               lastLocation: res.data.last_location
             });
-          } else if (res.data.status === false) {
+          } else if (res.data.result === false) {
             that.setData({
               prompt: '您未绑定学号，请在下方绑定',
               userToken: null,
